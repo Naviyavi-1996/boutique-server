@@ -2,12 +2,12 @@ const customizations = require('../models/customModel');
 const orders = require('../models/orderModel');
 //add order
 exports.addtoOrderController=async(req,res)=>{
-    const{itemid,size,phone,address,orderdate,status,remarks}=req.body;
+    const{itemid,size,phone,address,orderdate,status,remarks,price,color,description}=req.body;
     const userid=req.payload;
-    console.log(itemid,userid,size,phone,address,orderdate,status,remarks);
+    console.log(itemid,userid,size,phone,address,orderdate,status,remarks,price,color,description);
     try{
               const orderitem = new orders({
-                userid,itemid,size,phone,address,orderdate,status,remarks
+                userid,itemid,size,phone,address,orderdate,status,remarks,price,color,description
               }) 
               await orderitem.save()
               res.status(200).json(orderitem)
@@ -57,10 +57,10 @@ exports.getAllnormalOrdersController=async(req,res)=>{
 // Controller to update order status
 exports.updatenormalorderStatusController = async (req, res) => {
   const {orderId} = req.params;
-  const{userid,phone,address,itemid,size,orderdate,remarks,status}=req.body
+  const{userid,phone,address,itemid,size,orderdate,remarks,status,price,color,description }=req.body
   
   try{
-      const normalorders=await orders.findByIdAndUpdate({_id:orderId},{userid,phone,address,itemid,size,orderdate,remarks,status},{new:true})
+      const normalorders=await orders.findByIdAndUpdate({_id:orderId},{userid,phone,address,itemid,size,orderdate,remarks,status,price,color,description},{new:true})
       console.log(normalorders)
       await normalorders.save()
       res.status(200).json(normalorders)
